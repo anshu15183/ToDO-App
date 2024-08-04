@@ -47,6 +47,7 @@ function addTask(task){
 
     deleteButton.addEventListener('click', function(){
         todoList.removeChild(listItem);
+        saveTasksToLocalStorage();
     });
 
     editButton.addEventListener('click', function(){
@@ -82,11 +83,12 @@ function saveTasksToLocalStorage() {
     const tasks = [];
     document.querySelectorAll('#todo-list li').forEach(task => {
         const taskText = task.querySelector('span').textContent;
-        const isCompleted = task.classList.contains('completed');
+        const isCompleted = task.querySelector('input[type="checkbox"]').checked;
         tasks.push({ text: taskText, completed: isCompleted });
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
-  }
+}
+
   
   document.addEventListener('DOMContentLoaded', function() {
     const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
